@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.session.DisableEncodeUrlFilter;
 import ru.slisarenko.springpractick.db.repositary.security.JdbcUserDetailRepositoryImpl;
 
 import javax.sql.DataSource;
@@ -31,19 +32,14 @@ public class HttpBasicSecurityConfig {
         return new JdbcUserDetailRepositoryImpl(dataSource);
     }
 
+    @Bean
     public SecurityFilterChain basicSecurityFilterChain(HttpSecurity http) throws Exception {
-        return http.httpBasic(withDefaults())
+        http.addFilterBefore(new DeniedClientFilter(), DisableEncodeUrlFilter.class)
                 .authorizeHttpRequests(authorizeRequest ->
-                        authorizeRequest.anyRequest().authenticated()
-                )
-                .build();
-    }
-
-    public SecurityFilterChain customSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.apply(new CustomConfigurer());
+                        authorizeRequest
+                                .requestMatchers("/error").permitAll()
+                                .anyRequest().authenticated())
+                .apply(new HexConfigurer());
         return http.build();
     }
-
-
-
 }

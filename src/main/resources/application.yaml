@@ -21,6 +21,7 @@ logging:
     level:
       root: INFO
       org.springframework.jdbc.core: TRACE
+      org.springframework.security: TRACE
 
 
 
