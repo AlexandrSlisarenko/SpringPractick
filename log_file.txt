@@ -1,0 +1,40 @@
+FileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppenderFileAppender2025-05-12T13:57:35.698+03:00 INFO 3060 --- [main] r.s.springpractick.SpringPractice        : Starting SpringPractice using Java 17.0.2 with PID 3060 (F:\Learning_Java\SpringPractick\SpringPractick\build\classes\java\main started by aslisarenko in F:\Learning_Java\SpringPractick\SpringPractick)
+2025-05-12T13:57:35.700+03:00 INFO 3060 --- [main] r.s.springpractick.SpringPractice        : No active profile set, falling back to 1 default profile: "default"
+2025-05-12T13:57:36.055+03:00 INFO 3060 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-12T13:57:36.076+03:00 INFO 3060 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 0 JPA repository interfaces.
+2025-05-12T13:57:36.167+03:00 INFO 3060 --- [main] r.s.s.b.LogBeanFactoryPostProcessors     : this LogBeanFactoryPostProcessors
+2025-05-12T13:57:36.167+03:00 INFO 3060 --- [main] .VerifyPropertyBeanFactoryPostProcessors : this VerifyPropertyBeanFactoryPostProcessors
+2025-05-12T13:57:36.311+03:00 INFO 3060 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-05-12T13:57:36.472+03:00 INFO 3060 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2bc378f7
+2025-05-12T13:57:36.474+03:00 INFO 3060 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-05-12T13:57:36.512+03:00 INFO 3060 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-12T13:57:36.557+03:00 INFO 3060 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-05-12T13:57:36.587+03:00 INFO 3060 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-12T13:57:36.852+03:00 INFO 3060 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-12T13:57:36.932+03:00 INFO 3060 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.1
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-12T13:57:37.221+03:00 INFO 3060 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-12T13:57:37.226+03:00 INFO 3060 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-12T13:57:37.233+03:00 INFO 3060 --- [main] r.s.springpractick.db.ConnectionPull     : init connection pull
+2025-05-12T13:57:37.237+03:00 INFO 3060 --- [main] r.s.s.db.repositary.CompanyRepository    : Initializing CompanyRepository
+2025-05-12T13:57:37.367+03:00 INFO 3060 --- [main] r.s.springpractick.SpringPractice        : Started SpringPractice in 2.071 seconds (process running for 2.581)
+2025-05-12T13:57:37.370+03:00 INFO 3060 --- [main] r.s.springpractick.SpringPractice        : Application started
+2025-05-12T13:57:37.372+03:00 INFO 3060 --- [main] r.s.springpractick.SpringPractice        : JpaConfiguration[url=jdbc:postgresql://localhost:5432/HibernatePractic, user=postgres, password=postgres, port=543, pools=[Pool[size=3, timeout=10], Pool[size=5, timeout=15]], schemes={0={HibernatePractic=1}, 1={public=123RRRR}}]
+2025-05-12T13:57:37.372+03:00 INFO 3060 --- [main] r.s.springpractick.SpringPractice        :  поехали!!!
+2025-05-12T13:57:37.372+03:00 INFO 3060 --- [main] r.s.springpractick.db.ConnectionPull     : Class = ru.slisarenko.springpractick.db.ConnectionPull
+2025-05-12T13:57:37.373+03:00 INFO 3060 --- [main] r.s.springpractick.db.ConnectionPull     : size: null
+2025-05-12T13:57:37.373+03:00 INFO 3060 --- [main] r.s.s.db.repositary.CompanyRepository    : Find company by id:.....
+2025-05-12T13:57:37.374+03:00 INFO 3060 --- [main] r.s.springpractick.SpringPractice        : Optional[Company[id=1]]
+2025-05-12T13:57:37.374+03:00 INFO 3060 --- [main] r.s.s.db.repositary.CompanyRepository    : Find company by id:.....
+2025-05-12T13:57:37.375+03:00 INFO 3060 --- [main] r.s.s.listner.entity.EntityListner       : Entity: ru.slisarenko.springpractick.dto.CompanyReadDto READ
+2025-05-12T13:57:37.376+03:00 INFO 3060 --- [main] r.s.springpractick.SpringPractice        : Optional[CompanyReadDto[companyId=1]]
+2025-05-12T13:57:37.380+03:00 INFO 3060 --- [SpringApplicationShutdownHook] r.s.springpractick.db.ConnectionPull     : Clean connection pull
+2025-05-12T13:57:37.380+03:00 INFO 3060 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-12T13:57:37.382+03:00 INFO 3060 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-05-12T13:57:37.435+03:00 INFO 3060 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

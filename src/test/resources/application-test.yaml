@@ -1,0 +1,18 @@
+spring:
+    jpa:
+      properties:
+        hibernate:
+          default_schema: data_jpa
+          show_sql: true
+          format_sql: true
+          hbm2ddl.auto: update
+logging:
+  level:
+    root: INFO
+    org.springframework.jdbc.core: TRACE
+
+
+
+
+
+

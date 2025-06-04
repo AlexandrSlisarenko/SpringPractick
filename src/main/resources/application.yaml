@@ -1,0 +1,29 @@
+
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/HibernatePractic
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  security:
+    user:
+      password: password
+
+jpa:
+  properties:
+    hibernate:
+      default_schema: data_jpa
+      show_sql: true
+      format_sql: true
+      hbm2ddl.auto: validate
+logging:
+    level:
+      root: INFO
+      org.springframework.jdbc.core: TRACE
+
+
+
+
+
+

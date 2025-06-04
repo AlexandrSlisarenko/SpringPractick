@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j2:configuration>
+    <appender name="FileAppender" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p [%c{1}] %m%n"/>
+        </layout>
+    </appender>
+
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="FileAppender"/>
+    </root>
+</log4j2:configuration>
