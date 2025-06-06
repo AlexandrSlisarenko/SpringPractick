@@ -4,9 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import ru.slisarenko.springpractick.config.JpaConfiguration;
-import ru.slisarenko.springpractick.db.ConnectionPull;
-import ru.slisarenko.springpractick.db.service.CompanyService;
 
 @Slf4j
 @ConfigurationPropertiesScan("ru.slisarenko.springpractick.config")

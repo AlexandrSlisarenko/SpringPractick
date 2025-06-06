@@ -1,4 +1,4 @@
-package ru.slisarenko.springpractick.db.service;
+package ru.slisarenko.springpractick.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;

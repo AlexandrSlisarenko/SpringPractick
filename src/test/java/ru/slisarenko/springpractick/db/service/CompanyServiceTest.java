@@ -10,6 +10,7 @@ import ru.slisarenko.springpractick.db.entity.Company;
 import ru.slisarenko.springpractick.db.repositary.CompanyRepository;
 import ru.slisarenko.springpractick.dto.CompanyReadDto;
 import ru.slisarenko.springpractick.listner.entity.EntityEvent;
+import ru.slisarenko.springpractick.service.CompanyService;
 
 import java.util.Optional;
 

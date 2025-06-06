@@ -1,4 +1,4 @@
-package ru.slisarenko.springpractick.config.sequrity;
+package ru.slisarenko.springpractick.config.sequrity.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

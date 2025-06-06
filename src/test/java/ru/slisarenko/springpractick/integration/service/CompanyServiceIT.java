@@ -3,7 +3,7 @@ package ru.slisarenko.springpractick.integration.service;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 
-import ru.slisarenko.springpractick.db.service.CompanyService;
+import ru.slisarenko.springpractick.service.CompanyService;
 import ru.slisarenko.springpractick.dto.CompanyReadDto;
 import ru.slisarenko.springpractick.integration.annotation.MyIntegrationTest;
 

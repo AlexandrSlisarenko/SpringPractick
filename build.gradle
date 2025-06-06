@@ -30,6 +30,8 @@ dependencies {
     implementation("org.jetbrains.kotlin.kapt:org.jetbrains.kotlin.kapt.gradle.plugin:2.1.21")
     //queryDSL
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    //
+    implementation("com.nimbusds:nimbus-jose-jwt:9.41.1")
 
     annotationProcessor("jakarta.persistence:jakarta.persistence-api")
     annotationProcessor ("jakarta.annotation:jakarta.annotation-api")
