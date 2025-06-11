@@ -1,12 +1,14 @@
 package ru.slisarenko.springpractick.dto;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import ru.slisarenko.springpractick.config.sequrity.jwt.dto.Token;
 
 import java.util.Collection;
+
 
 public class TokenUser extends User {
 

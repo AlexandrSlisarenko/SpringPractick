@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.RouterFunctions;
 import org.springframework.web.servlet.function.ServerResponse;
+import ru.slisarenko.springpractick.config.sequrity.jwt.dto.Token;
+import ru.slisarenko.springpractick.dto.TokenUser;
 
 import java.util.Map;
 
@@ -32,4 +34,24 @@ public class SecurityControllers {
                 })
                 .build();
     }
+
+    /*@Bean
+    public RouterFunction<ServerResponse> routerHello(HttpSecurity http) {
+        return RouterFunctions.route()
+                .POST("/hello.html", request -> {
+                    var token = request.principal()
+                            .map(Authentication.class::cast)
+                            .map(Authentication::getPrincipal)
+                            .map(TokenUser.class::cast)
+                            .orElseThrow();
+                    return ServerResponse.ok()
+                            .contentType(MediaType.TEXT_HTML)
+                            .
+                            .body(Map.of("greeting", "Hello %s! V6"
+                                    .formatted(token.getUsername())));
+                })
+                .build();
+    }*/
+
+
 }

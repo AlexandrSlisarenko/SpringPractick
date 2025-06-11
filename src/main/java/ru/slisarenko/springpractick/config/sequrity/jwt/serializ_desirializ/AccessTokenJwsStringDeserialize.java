@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 @Slf4j
 @RequiredArgsConstructor
-public class AccessTokenJwsStingDeserialize implements Function<String, Token> {
+public class AccessTokenJwsStringDeserialize implements Function<String, Token> {
 
     private final JWSVerifier verifier;
 
@@ -23,13 +23,14 @@ public class AccessTokenJwsStingDeserialize implements Function<String, Token> {
             var signedJWT = SignedJWT.parse(stringToken);
             if (signedJWT.verify(this.verifier)) {
                 var claims = signedJWT.getJWTClaimsSet();
-                var token = new Token(
+                return new Token(
                         UUID.fromString(claims.getJWTID()),
                         claims.getSubject(),
                         claims.getStringListClaim("authorities"),
                         claims.getIssueTime().toInstant(),
                         claims.getExpirationTime().toInstant()
                 );
+
             }
         } catch (ParseException | JOSEException exception) {
             log.error(exception.getMessage(), exception);

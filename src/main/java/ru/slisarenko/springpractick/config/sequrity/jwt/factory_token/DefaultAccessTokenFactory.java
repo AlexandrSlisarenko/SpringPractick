@@ -13,7 +13,7 @@ import static java.time.Instant.now;
 public class DefaultAccessTokenFactory implements Function<Token, Token> {
 
     @Setter
-    private Duration tokenTtl = Duration.ofMinutes(5);
+    private Duration tokenTtl = Duration.ofMinutes(20);
 
 
     @Override

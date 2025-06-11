@@ -20,10 +20,10 @@ public class RefreshTokenJwsStringDeserialize implements Function<String, Token>
     @Override
     public Token apply(String stringToken) {
         try{
-            var encriptedJWT = EncryptedJWT.parse(stringToken);
-            encriptedJWT.decrypt(this.decrypter);
-            var claims = encriptedJWT.getJWTClaimsSet();
-            var token = new Token(
+            var encryptedJWT = EncryptedJWT.parse(stringToken);
+            encryptedJWT.decrypt(this.decrypter);
+            var claims = encryptedJWT.getJWTClaimsSet();
+            return new Token(
                     UUID.fromString(claims.getJWTID()),
                     claims.getSubject(),
                     claims.getStringListClaim("authorities"),

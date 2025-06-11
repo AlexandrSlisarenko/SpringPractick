@@ -21,20 +21,22 @@ public class JwtAuthenticationConverter implements AuthenticationConverter {
 
     @Override
     public Authentication convert(HttpServletRequest request) {
+        Authentication token = null;
         var authorization = request.getHeader("Authorization");
         if (Objects.nonNull(authorization) && authorization.startsWith(AUTHORIZATION_SCHEMA)) {
-            var stringToken = authorization.substring(AUTHORIZATION_SCHEMA.length() + 1);
+            var stringToken = authorization.substring(AUTHORIZATION_SCHEMA.length());
             var accessToken = this.accessTokenDeserializer.apply(stringToken);
             if(Objects.nonNull(accessToken)) {
-                return new PreAuthenticatedAuthenticationToken(accessToken, stringToken);
+                token = new PreAuthenticatedAuthenticationToken(accessToken, stringToken);
+                return token;
             }
             var refreshToken = this.refreshTokenDeserializer.apply(stringToken);
             if(Objects.nonNull(refreshToken)) {
-                return new PreAuthenticatedAuthenticationToken(refreshToken, stringToken);
+                token = new PreAuthenticatedAuthenticationToken(refreshToken, stringToken);
+                return token;
             }
         }
 
-
-        return null;
+        return token;
     }
 }
