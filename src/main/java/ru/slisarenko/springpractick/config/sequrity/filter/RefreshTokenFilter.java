@@ -1,6 +1,5 @@
 package ru.slisarenko.springpractick.config.sequrity.filter;
 
-import com.fasterxml.jackson.core.filter.TokenFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -8,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Setter;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.security.web.context.SecurityContextRepository;
@@ -29,11 +27,7 @@ public class RefreshTokenFilter extends OncePerRequestFilter {
 
     private SecurityContextRepository securityContextRepository;
 
-    private Function<Authentication, Token> refreshTokenFactory;
-
     private Function<Token, Token> accessTokenFactory;
-
-    private Function<Token, String> refreshTokenStringSerializer;
 
     private Function<Token, String> accessTokenStringSerializer;
 

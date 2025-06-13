@@ -54,7 +54,8 @@ public class HttpBasicSecurityConfig {
     public JwtAuthenticationConfigurer jwtAuthenticationConfigurer(
             @Value("${jwt.access-token-key}") String accessTokenKey,
             @Value("${jwt.refresh-token-key}") String refreshTokenKey,
-            @Value("${jwt.request-path}") String requestPath
+            @Value("${jwt.request-path}") String requestPath,
+            @Value("${jwt.refresh-path}") String refreshPath
     ) throws JOSEException, ParseException {
         var accessSigner = new MACSigner(OctetSequenceKey.parse(accessTokenKey));
         var refreshSigner = new DirectEncrypter(OctetSequenceKey.parse(refreshTokenKey));
@@ -66,6 +67,8 @@ public class HttpBasicSecurityConfig {
         var configurer = new JwtAuthenticationConfigurer();
 
         configurer.setJwtPath(requestPath);
+
+        configurer.setJwtRefreshPath(refreshPath);
 
         configurer.setSecurityContextRepository(new RequestAttributeSecurityContextRepository());
 
@@ -81,21 +84,20 @@ public class HttpBasicSecurityConfig {
     }
 
     @Bean
-    @PostMapping()
     public SecurityFilterChain basicSecurityFilterChain(HttpSecurity http,
                                                         JwtAuthenticationConfigurer jwtAuthenticationConfigurer) throws Exception {
 
         http.apply(new HexConfigurer());
         http.apply(jwtAuthenticationConfigurer);
         http.httpBasic(Customizer.withDefaults())
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeRequest ->
                         authorizeRequest
-                                .requestMatchers("/hello.html").hasRole("USER")
-                                .requestMatchers("/public/**").hasRole("ADMIN")
-                                .requestMatchers("/error").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/hello.html").hasRole("USER")
+                                .requestMatchers(HttpMethod.POST, "/public/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/error").permitAll()
                                 .anyRequest().authenticated()
+                ).sessionManagement((session) -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
 
         return http.build();

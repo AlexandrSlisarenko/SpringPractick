@@ -23,7 +23,7 @@ public class TokenAuthenticationUserDetailsService implements AuthenticationUser
             throws UsernameNotFoundException {
         if (preAuthenticatedToken.getPrincipal() instanceof Token token) {
             return new TokenUser(token.username(),
-                    "{bcrypt}$2a$10$DIm.PQJcTINRAXrQ61.3pOnlzE3tBxso/P7nm2bxfn0Mu.KwbEnIW",
+                    "$2a$10$DIm.PQJcTINRAXrQ61.3pOnlzE3tBxso/P7nm2bxfn0Mu.KwbEnIW",
                     true,
                     true,
                     token.expiresAt().isAfter(Instant.now()),

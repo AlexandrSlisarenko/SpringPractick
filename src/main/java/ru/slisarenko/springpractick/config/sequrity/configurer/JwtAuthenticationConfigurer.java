@@ -1,25 +1,21 @@
 package ru.slisarenko.springpractick.config.sequrity.configurer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Setter;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.ParameterRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.slisarenko.springpractick.config.sequrity.filter.RefreshTokenFilter;
 import ru.slisarenko.springpractick.config.sequrity.filter.RequestJwtTokenFilter;
@@ -35,8 +31,13 @@ import java.util.function.Function;
 @Setter
 public class JwtAuthenticationConfigurer extends AbstractHttpConfigurer<JwtAuthenticationConfigurer, HttpSecurity> {
 
-    private String jwtPath = "/jwt/tokens";
+    private static final String JWT_PATH = "/jwt/tokens";
+    private static final String JWT_REFRESH_PATH = "/jwt/refresh";
 
+
+    private String jwtPath = JWT_PATH;
+
+    private String jwtRefreshPath = JWT_REFRESH_PATH;
 
     private SecurityContextRepository securityContextRepository;
 
@@ -69,15 +70,26 @@ public class JwtAuthenticationConfigurer extends AbstractHttpConfigurer<JwtAuthe
         var jwtAuthenticationFilter = createJwtAuthenticationFilter(builder);
         var provider = createprovider();
 
-        var refreshTokenFilter = new RefreshTokenFilter();
-        refreshTokenFilter.setAccessTokenStringSerializer(this.accessTokenStringSerializer);
+        var refreshTokenFilter = createJwtRefreshTokenFiltr();
 
 
         builder.addFilterAfter(requestJwtTokenFilter, ExceptionTranslationFilter.class)
+                .addFilterAfter(refreshTokenFilter, ExceptionTranslationFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter, CsrfFilter.class)
                 .authenticationProvider(provider);
 
 
+    }
+
+    private RefreshTokenFilter createJwtRefreshTokenFiltr() {
+        var filter = new RefreshTokenFilter();
+
+        filter.setAccessTokenStringSerializer(this.accessTokenStringSerializer);
+        filter.setAccessTokenFactory(this.accessTokenFactory);
+        filter.setRequestMatcher(new AntPathRequestMatcher(jwtRefreshPath, HttpMethod.POST.name()));
+        filter.setSecurityContextRepository(this.securityContextRepository);
+
+        return filter;
     }
 
     private PreAuthenticatedAuthenticationProvider createprovider() {
@@ -98,6 +110,7 @@ public class JwtAuthenticationConfigurer extends AbstractHttpConfigurer<JwtAuthe
     }
 
     private AuthenticationFilter createJwtAuthenticationFilter(HttpSecurity builder) {
+
         var authenticationManager =
                 builder.getSharedObject(AuthenticationManager.class);
 
@@ -113,6 +126,11 @@ public class JwtAuthenticationConfigurer extends AbstractHttpConfigurer<JwtAuthe
         jwtAuthenticationFilter
                 .setFailureHandler((request, response, exception) ->
                         response.sendError(HttpServletResponse.SC_FORBIDDEN));
+        jwtAuthenticationFilter
+                .setSecurityContextRepository(new RequestAttributeSecurityContextRepository());
+        jwtAuthenticationFilter
+                .setSecurityContextHolderStrategy(SecurityContextHolder.getContextHolderStrategy());
+
 
 
         return jwtAuthenticationFilter;

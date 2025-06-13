@@ -35,7 +35,7 @@ public class SecurityControllers {
                 .build();
     }
 
-    /*@Bean
+    @Bean
     public RouterFunction<ServerResponse> routerHello(HttpSecurity http) {
         return RouterFunctions.route()
                 .POST("/hello.html", request -> {
@@ -44,14 +44,12 @@ public class SecurityControllers {
                             .map(Authentication::getPrincipal)
                             .map(TokenUser.class::cast)
                             .orElseThrow();
+
                     return ServerResponse.ok()
-                            .contentType(MediaType.TEXT_HTML)
-                            .
-                            .body(Map.of("greeting", "Hello %s! V6"
-                                    .formatted(token.getUsername())));
+                            .contentType(MediaType.TEXT_HTML).build();
                 })
                 .build();
-    }*/
+    }
 
 
 }
