@@ -55,5 +55,12 @@ CREATE TABLE IF NOT EXISTS data_jpa.passwords
     password varchar(200)
 );
 
+CREATE TABLE IF NOT EXISTS data_jpa.deactivated_token(
+    id uuid PRIMARY KEY,
+    c_keep_until TIMESTAMP NOT NULL check ( c_keep_until > now() )
+);
+
+ALTER TABLE data_jpa.users ADD CONSTRAINT unique_username UNIQUE (username);
+
 
 

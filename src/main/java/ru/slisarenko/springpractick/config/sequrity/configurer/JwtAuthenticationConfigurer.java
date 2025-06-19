@@ -17,12 +17,14 @@ import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ru.slisarenko.springpractick.config.sequrity.filter.JwtLogoutFilter;
 import ru.slisarenko.springpractick.config.sequrity.filter.RefreshTokenFilter;
 import ru.slisarenko.springpractick.config.sequrity.filter.RequestJwtTokenFilter;
 import ru.slisarenko.springpractick.config.sequrity.jwt.converter.JwtAuthenticationConverter;
 import ru.slisarenko.springpractick.config.sequrity.jwt.factory_token.DefaultAccessTokenFactory;
 import ru.slisarenko.springpractick.config.sequrity.jwt.factory_token.DefaultRefreshTokenFactory;
 import ru.slisarenko.springpractick.config.sequrity.jwt.dto.Token;
+import ru.slisarenko.springpractick.db.repositary.security.JdbcTokenLogoutRepository;
 import ru.slisarenko.springpractick.service.TokenAuthenticationUserDetailsService;
 
 import java.util.Objects;
@@ -33,11 +35,13 @@ public class JwtAuthenticationConfigurer extends AbstractHttpConfigurer<JwtAuthe
 
     private static final String JWT_PATH = "/jwt/tokens";
     private static final String JWT_REFRESH_PATH = "/jwt/refresh";
-
+    private static final String JWT_LOGOUT_PATH = "/jwt/logout";
 
     private String jwtPath = JWT_PATH;
 
     private String jwtRefreshPath = JWT_REFRESH_PATH;
+
+    private String jwtLogoutPath = JWT_LOGOUT_PATH;
 
     private SecurityContextRepository securityContextRepository;
 
@@ -53,6 +57,7 @@ public class JwtAuthenticationConfigurer extends AbstractHttpConfigurer<JwtAuthe
 
     private Function<String, Token> accessTokenStringDeserializer;
 
+    private JdbcTokenLogoutRepository jwtTokenLogoutRepository;
 
     @Override
     public void init(HttpSecurity builder) throws Exception {
@@ -66,22 +71,24 @@ public class JwtAuthenticationConfigurer extends AbstractHttpConfigurer<JwtAuthe
 
     @Override
     public void configure(HttpSecurity builder) throws Exception {
+        var provider = createProvider();
+
         var requestJwtTokenFilter = createJwtTokenFilter();
         var jwtAuthenticationFilter = createJwtAuthenticationFilter(builder);
-        var provider = createprovider();
-
-        var refreshTokenFilter = createJwtRefreshTokenFiltr();
+        var refreshTokenFilter = createJwtRefreshTokenFilter();
+        var jwtLogoutFilter = createJwtLogoutFilter();
 
 
         builder.addFilterAfter(requestJwtTokenFilter, ExceptionTranslationFilter.class)
                 .addFilterAfter(refreshTokenFilter, ExceptionTranslationFilter.class)
+                .addFilterAfter(jwtLogoutFilter, ExceptionTranslationFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter, CsrfFilter.class)
                 .authenticationProvider(provider);
 
 
     }
 
-    private RefreshTokenFilter createJwtRefreshTokenFiltr() {
+    private RefreshTokenFilter createJwtRefreshTokenFilter() {
         var filter = new RefreshTokenFilter();
 
         filter.setAccessTokenStringSerializer(this.accessTokenStringSerializer);
@@ -92,9 +99,9 @@ public class JwtAuthenticationConfigurer extends AbstractHttpConfigurer<JwtAuthe
         return filter;
     }
 
-    private PreAuthenticatedAuthenticationProvider createprovider() {
+    private PreAuthenticatedAuthenticationProvider createProvider() {
         var provider = new PreAuthenticatedAuthenticationProvider();
-        provider.setPreAuthenticatedUserDetailsService(new TokenAuthenticationUserDetailsService());
+        provider.setPreAuthenticatedUserDetailsService(new TokenAuthenticationUserDetailsService(jwtTokenLogoutRepository));
         return provider;
     }
 
@@ -106,6 +113,14 @@ public class JwtAuthenticationConfigurer extends AbstractHttpConfigurer<JwtAuthe
         filter.setAccessTokenStringSerializer(this.accessTokenStringSerializer);
         filter.setRefreshTokenFactory(this.refreshTokenFactory);
         filter.setAccessTokenFactory(this.accessTokenFactory);
+        return filter;
+    }
+
+    private JwtLogoutFilter createJwtLogoutFilter() {
+        var filter = new JwtLogoutFilter(jwtTokenLogoutRepository);
+        filter.setRequestMatcher(new AntPathRequestMatcher(jwtLogoutPath, HttpMethod.POST.name()));
+        filter.setSecurityContextRepository(new RequestAttributeSecurityContextRepository());
+
         return filter;
     }
 

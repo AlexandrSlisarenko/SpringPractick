@@ -34,6 +34,7 @@ jwt:
   refresh-token-key: '{"kty":"oct","k":"404491d134b23069cd800106d3e2edd63996def57f8f1530e4e7bc8dbdf80fb9"}'
   request-path: "/jwt/tokens"
   refresh-path: "/jwt/refresh"
+  logout-path: "/jwt/logout"
 
 
 
