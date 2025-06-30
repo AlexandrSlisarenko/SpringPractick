@@ -28,8 +28,6 @@ public class JwtLogoutFilter extends OncePerRequestFilter {
 
     private SecurityContextRepository securityContextRepository;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
-
     private final JdbcTokenLogoutRepository jdbcTokenLogoutRepository;
 
     /**
