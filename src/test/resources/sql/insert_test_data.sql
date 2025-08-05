@@ -3,6 +3,7 @@ INSERT INTO data_jpa.company(id, name) VALUES (2,'Demis Group');
 INSERT INTO data_jpa.company(id, name) VALUES (3,'Avikey');
 INSERT INTO data_jpa.company(id, name) VALUES (4,'SEO');
 INSERT INTO data_jpa.company(id, name) VALUES (5,'ALT');
+INSERT INTO data_jpa.company(id, name) VALUES (6,'APPLE');
 SELECT SETVAL('data_jpa.company_id_seq', (SELECT MAX(id) FROM data_jpa.company));
 
 INSERT INTO data_jpa.company_locales(company_id, lang, description) VALUES (1,'RU', 'Last company');
@@ -43,6 +44,7 @@ INSERT INTO data_jpa.users_chat(user_id, chat_id) VALUES (3,1);
 INSERT INTO data_jpa.users_chat(user_id, chat_id) VALUES (6,1);
 INSERT INTO data_jpa.users_chat(user_id, chat_id) VALUES (6,2);
 
-INSERT INTO data_jpa.passwords(user_id, password) VALUES (13, 'pass123');
+INSERT INTO data_jpa.passwords(user_id, password) VALUES (1, 'pass123');
+
 
 

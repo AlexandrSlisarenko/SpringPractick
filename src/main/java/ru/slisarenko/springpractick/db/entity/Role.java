@@ -1,5 +1,5 @@
 package ru.slisarenko.springpractick.db.entity;
 
 public enum Role {
-    USER, ADMIN
+    USER_ROLE, ADMIN_ROLE
 }

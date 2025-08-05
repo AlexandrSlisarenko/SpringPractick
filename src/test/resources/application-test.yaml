@@ -1,16 +1,21 @@
 spring:
-    jpa:
-      properties:
+  datasource:
+    username: test
+    password: test
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
         hibernate:
           default_schema: data_jpa
           show_sql: true
           format_sql: true
-          hbm2ddl.auto: update
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          hbm2ddl:
+            auto: validate
 logging:
   level:
     root: INFO
     org.springframework.jdbc.core: TRACE
-
 
 
 

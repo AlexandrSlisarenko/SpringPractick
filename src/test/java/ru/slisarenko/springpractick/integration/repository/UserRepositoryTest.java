@@ -1,6 +1,5 @@
 package ru.slisarenko.springpractick.integration.repository;
 
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ import ru.slisarenko.springpractick.dto.PersonalInfo;
 import ru.slisarenko.springpractick.dto.PersonalInfoProjection;
 import ru.slisarenko.springpractick.dto.UserFilterByCompanyAndRole;
 import ru.slisarenko.springpractick.dto.UserFilterByFIOAndBirthDate;
-import ru.slisarenko.springpractick.integration.annotation.MyIntegrationTest;
+import ru.slisarenko.springpractick.integration.IntegrationTestBase;
 
 import java.time.LocalDate;
 
@@ -22,28 +21,27 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-@MyIntegrationTest
 @RequiredArgsConstructor
-class UserRepositoryTest {
+class UserRepositoryTest extends IntegrationTestBase {
 
     private final UserRepository userRepository;
-    private final EntityManager entityManager;
+
 
     @Test
     void checkUpdate(){
-        var ivan = userRepository.getReferenceById(13L);
+        var ivan = userRepository.getReferenceById(4L);
         assertNull(ivan.getRole());
-        var countUpdate = userRepository.updateRole(Role.USER, 13L,18L);
+        var countUpdate = userRepository.updateRole(Role.USER_ROLE, 4L,3L);
         assertEquals(2, countUpdate);
-        var samIvan = userRepository.getReferenceById(13L);
-        assertSame(Role.USER, samIvan.getRole());
+        var samIvan = userRepository.getReferenceById(4L);
+        assertSame(Role.USER_ROLE, samIvan.getRole());
     }
 
     @Test
     void checkFindFirstOrderByDesc(){
         var optionalUser = userRepository.findFirstByOrderByIdDesc();
         assertTrue(optionalUser.isPresent());
-        optionalUser.ifPresent(user -> assertEquals(18L, user.getId()));
+        optionalUser.ifPresent(user -> assertEquals(6L, user.getId()));
     }
 
     @Test
@@ -160,7 +158,7 @@ class UserRepositoryTest {
     @Test
     @Commit
     void checkAuditing(){
-        var user = userRepository.findById(17L).get();
+        var user = userRepository.findById(5L).get();
         log.info(user.getBirthDate().toString());
         user.setBirthDate(user.getBirthDate().plusYears(1L));
         userRepository.flush();
@@ -171,7 +169,7 @@ class UserRepositoryTest {
 
     @Test
     void checkSearchUsersByCompanyAndRoleThroughJdbc(){
-        var filter = new UserFilterByCompanyAndRole("mex", Role.USER.name());
+        var filter = new UserFilterByCompanyAndRole("mex", Role.USER_ROLE.name());
 
         var users = userRepository.searchUsersByCompanyAndRole(filter);
         assertThat(users).hasSize(1);

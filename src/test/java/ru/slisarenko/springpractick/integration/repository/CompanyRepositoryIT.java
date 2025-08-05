@@ -7,15 +7,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.transaction.support.TransactionTemplate;
 import ru.slisarenko.springpractick.db.entity.Company;
 import ru.slisarenko.springpractick.db.repositary.CompanyRepository;
+import ru.slisarenko.springpractick.integration.IntegrationTestBase;
 import ru.slisarenko.springpractick.integration.annotation.MyIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
-@MyIntegrationTest
 @RequiredArgsConstructor
-class CompanyRepositoryIT {
+class CompanyRepositoryIT extends IntegrationTestBase {
 
     private static final Long APPLE_ID = 6L;
 
@@ -31,9 +31,9 @@ class CompanyRepositoryIT {
     void findById() {
         var companys = entityManager.createQuery("FROM Company", Company.class).getResultList();
         assertNotNull(companys);
-        assertThat(companys).hasSize(5);
+        assertThat(companys).hasSize(6);
         assertThat(companys.get(1).getLocales()).hasSize(1);
-        assertTrue(companys.stream().filter(company -> company.getId() == 11L).findFirst().get().getName().equals("Cinimex"));
+        assertTrue(companys.stream().filter(company -> company.getId() == 1L).findFirst().get().getName().equals("Cinimex"));
     }
 
     @Test

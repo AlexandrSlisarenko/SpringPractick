@@ -7,6 +7,8 @@ plugins {
     id("org.jetbrains.kotlin.kapt") version "2.1.21"
 }
 
+apply from: 'versions.gradle'
+
 group = "ru.slisarenko"
 version = "1.0-SNAPSHOT"
 
@@ -22,21 +24,23 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.data:spring-data-envers")
     implementation("org.postgresql:postgresql")
+    implementation("org.liquibase:liquibase-core")
     //queryDSL
     implementation("com.querydsl:querydsl-core")
-    implementation("com.querydsl:querydsl-jpa:5.1.0:jakarta")
-    implementation("com.querydsl:querydsl-apt:5.1.0:jakarta")
-    annotationProcessor("com.querydsl:querydsl-apt:5.1.0:jakarta")
-    implementation("org.jetbrains.kotlin.kapt:org.jetbrains.kotlin.kapt.gradle.plugin:2.1.21")
+    implementation("com.querydsl:querydsl-jpa:${versions.querydsl}")
+    implementation("com.querydsl:querydsl-apt:${versions.querydsl}")
+    annotationProcessor("com.querydsl:querydsl-apt:${versions.querydsl}")
+    implementation("org.jetbrains.kotlin.kapt:org.jetbrains.kotlin.kapt.gradle.plugin:${versions.kapt}")
     //queryDSL
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     //
-    implementation("com.nimbusds:nimbus-jose-jwt:9.41.1")
+    implementation("com.nimbusds:nimbus-jose-jwt:${versions.nimbusds}")
 
     annotationProcessor("jakarta.persistence:jakarta.persistence-api")
     annotationProcessor ("jakarta.annotation:jakarta.annotation-api")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("org.testcontainers:postgresql:${versions.testcontainers}")
 }
 
 tasks.test {

@@ -1,0 +1,8 @@
+ext {
+    versions = [
+            'testcontainers': '1.20.0',
+            'querydsl'      : '5.1.0:jakarta',
+            'kapt'          : '2.1.21',
+            'nimbusds'      : '9.41.1'
+    ]
+}
