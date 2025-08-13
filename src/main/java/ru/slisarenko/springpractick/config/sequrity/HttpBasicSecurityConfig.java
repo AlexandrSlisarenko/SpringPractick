@@ -103,7 +103,6 @@ public class HttpBasicSecurityConfig {
     public SecurityFilterChain basicSecurityFilterChain(HttpSecurity http,
                                                         JwtAuthenticationConfigurer jwtAuthenticationConfigurer) throws Exception {
 
-        http.apply(new HexConfigurer());
         http.apply(jwtAuthenticationConfigurer);
         http.httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorizeRequest ->
@@ -111,6 +110,8 @@ public class HttpBasicSecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/hello.html").hasRole("USER")
                                 .requestMatchers(HttpMethod.POST, "/public/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/error").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated()
                 ).sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
